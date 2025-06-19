@@ -32,8 +32,11 @@ public class EmailController {
         @Override
         public void accept(Message message) {
             view.getBottomPanel().setMessageContent(message.getContent());
+            view.getBottomPanel().setReceiverInputFieldValue(message.getReceiverEmail());
+            view.getBottomPanel().setTopicInputFieldValue(message.getTitle());
         }
     }
+
 
     public void onCreateEmail() {
 

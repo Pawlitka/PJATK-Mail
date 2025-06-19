@@ -4,7 +4,6 @@ import org.example.model.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -15,6 +14,8 @@ public class BottomPanel extends JPanel {
     private final JList<Message> listOfSentEmails = new JList<>();
     private JTextArea textArea;
     private final JPanel recevierAndTopicPanel;
+    private  JTextField receiverInputField;
+    private  JTextField topicInputField;
 
     public BottomPanel() {
         super(new BorderLayout());
@@ -97,9 +98,10 @@ public class BottomPanel extends JPanel {
         constraints.gridy = 0;
         constraints.gridheight = 2;
         constraints.weighty = 2;
-        constraints.anchor = GridBagConstraints.NORTHWEST;
         constraints.fill = GridBagConstraints.BOTH;
         rightPanel.add(recevierAndTopicPanel,constraints);
+        createReceiverInputField();
+        createTopicInputField();
     }
 
     private void messageContent() {
@@ -127,12 +129,19 @@ public class BottomPanel extends JPanel {
     }
 
     public void setMessageContent(String content) {
-        textArea.setText("");
-        textArea.append(content);
+        textArea.setText(content);
     }
 
+    public void setReceiverInputFieldValue(String value) {
+        receiverInputField.setText(value);
+    }
+
+    public void setTopicInputFieldValue(String value) {
+        topicInputField.setText(value);
+    }
+
+
     public void setListOfSentEmails(ArrayList<Message> messages) {
-//        listOfSentEmails = new JList<>(messages.toArray(new Message[0]));
         listOfSentEmails.clearSelection();
         DefaultListModel<Message> listModel = new DefaultListModel<>();
         listModel.addAll(messages);
@@ -140,17 +149,50 @@ public class BottomPanel extends JPanel {
         listOfSentEmails.updateUI();
     }
 
-    private void receiverContent() {
+    private void createReceiverInputField() {
+        JPanel container = new JPanel(new GridBagLayout());
+        JLabel label = new JLabel("TO:");
+        receiverInputField = new JTextField();
+        receiverInputField.setEditable(false);
+
+        GridBagConstraints constraintsLabel = new GridBagConstraints();
+        constraintsLabel.gridx = 0;
+        constraintsLabel.gridy = 0;
+        constraintsLabel.gridwidth = 1;
+        constraintsLabel.weightx = 1.0;
+        constraintsLabel.fill = GridBagConstraints.BOTH;
+        container.add(label, constraintsLabel);
+        GridBagConstraints constraintsReceiver = new GridBagConstraints();
+        constraintsReceiver.gridx = 1;
+        constraintsReceiver.gridy = 0;
+        constraintsReceiver.gridwidth = 9;
+        constraintsReceiver.weightx = 9.0;
+        constraintsReceiver.fill = GridBagConstraints.BOTH;
+        container.add(receiverInputField, constraintsReceiver);
+
+
         GridBagConstraints constraints = new GridBagConstraints();
-        textArea = new JTextArea();
-        textArea.setEditable(false);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
-        constraints.weighty = 1;
+        constraints.weighty = 0.5;
         constraints.weightx = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
-        rightPanel.add(recevierAndTopicPanel, constraints);
+        recevierAndTopicPanel.add(container, constraints);
+    }
+
+    private void createTopicInputField() {
+        GridBagConstraints constraints = new GridBagConstraints();
+        topicInputField = new JTextField("Topic");
+        topicInputField.setEditable(false);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        constraints.weighty = 0.5;
+        constraints.weightx = 1.0;
+        constraints.fill = GridBagConstraints.BOTH;
+        recevierAndTopicPanel.add(topicInputField, constraints);
     }
 }
