@@ -73,7 +73,6 @@ public class BottomPanel extends JPanel {
 
     private void receiverAndTopicContent() {
         GridBagConstraints constraints = new GridBagConstraints();
-        recevierAndTopicPanel.setBackground(Color.red);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridheight = 2;
@@ -88,6 +87,8 @@ public class BottomPanel extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
         textArea = new JTextArea();
         textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridheight = 1;
@@ -145,25 +146,25 @@ public class BottomPanel extends JPanel {
 
     private void createReceiverLabel() {
         JLabel label = new JLabel("TO:");
-        GridBagConstraints constraintsLabel = new GridBagConstraints();
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 0;
-        constraintsLabel.gridwidth = 1;
-        constraintsLabel.weightx = 1.0;
-        constraintsLabel.fill = GridBagConstraints.BOTH;
-        receiverContainer.add(label, constraintsLabel);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.weightx = 1.0;
+        constraints.fill = GridBagConstraints.BOTH;
+        receiverContainer.add(label, constraints);
     }
 
     private void createReceiverField() {
         receiverInputField = new JTextField();
         receiverInputField.setEditable(false);
-        GridBagConstraints constraintsReceiver = new GridBagConstraints();
-        constraintsReceiver.gridx = 1;
-        constraintsReceiver.gridy = 0;
-        constraintsReceiver.gridwidth = 9;
-        constraintsReceiver.weightx = 9.0;
-        constraintsReceiver.fill = GridBagConstraints.BOTH;
-        receiverContainer.add(receiverInputField, constraintsReceiver);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.gridwidth = 9;
+        constraints.weightx = 9.0;
+        constraints.fill = GridBagConstraints.BOTH;
+        receiverContainer.add(receiverInputField, constraints);
     }
 
     private void createTopicInputField() {
@@ -183,24 +184,24 @@ public class BottomPanel extends JPanel {
 
     private void createTopicLabel() {
         JLabel label = new JLabel("TOPIC:");
-        GridBagConstraints constraintsLabel = new GridBagConstraints();
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 0;
-        constraintsLabel.gridwidth = 1;
-        constraintsLabel.weightx = 0.8;
-        constraintsLabel.fill = GridBagConstraints.BOTH;
-        topicContainer.add(label, constraintsLabel);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.weightx = 0.8;
+        constraints.fill = GridBagConstraints.BOTH;
+        topicContainer.add(label, constraints);
     }
 
     private void createTopicField() {
         topicInputField = new JTextField();
         topicInputField.setEditable(false);
-        GridBagConstraints constraintsTopic = new GridBagConstraints();
-        constraintsTopic.gridx = 1;
-        constraintsTopic.gridy = 0;
-        constraintsTopic.gridwidth = 9;
-        constraintsTopic.weightx = 9.0;
-        constraintsTopic.fill = GridBagConstraints.BOTH;
-        topicContainer.add(topicInputField, constraintsTopic);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.gridwidth = 9;
+        constraints.weightx = 9.0;
+        constraints.fill = GridBagConstraints.BOTH;
+        topicContainer.add(topicInputField, constraints);
     }
 }
