@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 //        myFrame frame = new myFrame();
         EmailView emailView = new EmailView();
-        emailViewController = new EmailController(emailView);
+        emailViewController = EmailController.getInstance(emailView);
 //        EmailFrame frame1 = new EmailFrame();
 //        frame1.start();
     }

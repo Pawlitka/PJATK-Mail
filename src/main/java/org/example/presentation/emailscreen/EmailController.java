@@ -9,19 +9,26 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class EmailController {
-    //    private final ArrayList<Message> sentMessages = new ArrayList<>();
+    private static EmailController INSTANCE;
     public final ArrayList<Message> sentMessages = new ArrayList<>(List.of(
             new Message("marcin.test@gmail.com", "testowy", "Test, test lalali lalala"),
             new Message("ancymon@gmail.com", "kotki", "Lubie kotki, pozdrawiam"),
             new Message("pawel@gmail.com", "rre", "Lubie kotki 2137, pozdrawiam ")
     ));
     private Message selectedMessage;
-    private final EmailView view;
+    private EmailView view;
 
-    public EmailController(EmailView view) {
+    private EmailController(EmailView view) {
         this.view = view;
         initData();
         bindListeners();
+    }
+
+    public static EmailController getInstance(EmailView view) {
+        if (INSTANCE == null) {
+            INSTANCE = new EmailController(view);
+        }
+        return INSTANCE;
     }
 
     private void bindListeners() {
@@ -47,6 +54,7 @@ public class EmailController {
     }
 
     private void initData() {
+
         view.getBottomPanel().setListOfSentEmails(sentMessages);
     }
 }
