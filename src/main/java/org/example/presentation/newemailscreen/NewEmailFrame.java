@@ -120,7 +120,7 @@ public class NewEmailFrame extends JFrame {
 
     private void createContactButton() {
         JButton button = new JButton("Choose");
-        button.addActionListener(e -> new ContactsFrame());
+        button.addActionListener(e -> new ContactsFrame(this::setReceiverEmail));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 2;
         constraints.gridy = 0;
@@ -156,7 +156,7 @@ public class NewEmailFrame extends JFrame {
 
     private void createTopicField() {
         topicInputField = new JTextField();
-        topicInputField.setEditable(false);
+        topicInputField.setEditable(true);
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -187,5 +187,9 @@ public class NewEmailFrame extends JFrame {
         button.addActionListener(e -> dispose());
         buttonsContainer.add(button);
         return button;
+    }
+
+    private void setReceiverEmail(String email) {
+        receiverInputField.setText(email);
     }
 }

@@ -1,18 +1,22 @@
 package org.example.presentation.newcontactscreen;
 
+import org.example.presentation.emailscreen.EmailController;
+
+import javax.imageio.IIOException;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.awt.*;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class NewContactFrame extends JFrame {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$");
     private final JPanel mainPanel;
     private final JPanel nameContainer;
     private final JPanel surnameContainer;
     private final JPanel emailContainer;
     private final JPanel buttonsContainer;
+    private final EmailController.ContactSaver contactSaver = new EmailController.ContactSaver("contacts.txt");
     private  JTextField nameInputField;
     private  JTextField surnameInputField;
     private  JTextField emailInputField;
@@ -167,18 +171,40 @@ public class NewContactFrame extends JFrame {
         emailContainer.add(emailInputField, constraints);
     }
 
-    private JButton createButton() {
+    private void createButton() {
         JButton button = new JButton("Add");
+
         button.addActionListener(e -> {
-            String input = emailInputField.getText();
-            if (isValidEmail(input)) {
-                emailInputField.setBorder(BorderFactory.createLineBorder(Color.RED));
-            } else {
-                emailInputField.setBorder(BorderFactory.createLineBorder(Color.RED));
+            String name = nameInputField.getText().trim();
+            String surname = surnameInputField.getText().trim();
+            String email = emailInputField.getText().trim();
+            if(name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
+                showError("All fields are required!");
+                return;
             }
+
+            if (!isValidEmail(email)) {
+                emailInputField.setBorder(BorderFactory.createLineBorder(Color.RED));
+                showError("Invalid email address!");
+                return;
+            } else {
+                emailInputField.setBorder(BorderFactory.createLineBorder(Color.white));
+            }
+
+            try {
+                EmailController.Contact contact = new EmailController.Contact(name, surname, email);
+                contactSaver.save(contact);
+                JOptionPane.showMessageDialog(this, "Contact saved!");
+                clearFields();
+                dispose();
+
+            } catch (IOException ex) {
+                showError("Error reading or saving contacts: " + ex.getMessage());
+            }
+            dispose();
         });
+
         buttonsContainer.add(button);
-        return button;
     }
 
     private JButton cancelButton() {
@@ -190,6 +216,16 @@ public class NewContactFrame extends JFrame {
 
     public static boolean isValidEmail(String email) {
         return EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    private void clearFields() {
+        nameInputField.setText("");
+        surnameInputField.setText("");
+        emailInputField.setText("");
+    }
+
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 
