@@ -4,6 +4,7 @@ import org.example.presentation.contactsscreen.ContactsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class NewMessageView extends JFrame {
     private final JPanel mainPanel;
@@ -16,6 +17,9 @@ public class NewMessageView extends JFrame {
     private final JPanel receiverContainer;
     private JTextArea textArea;
     private final JPanel buttonsContainer;
+    private JButton createButton;
+    private JButton chooseContactButton;
+    private JButton cancelButton;
 
 
     public NewMessageView() {
@@ -86,7 +90,7 @@ public class NewMessageView extends JFrame {
     private void createReceiverInputField() {
         createReceiverLabel();
         createReceiverField();
-        createContactButton();
+        createChooseContactButton();
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -117,15 +121,15 @@ public class NewMessageView extends JFrame {
         receiverContainer.add(receiverInputField, constraints);
     }
 
-    private void createContactButton() {
-        JButton button = new JButton("Choose");
-        button.addActionListener(e -> new ContactsView(this::setReceiverEmail));
+    private void createChooseContactButton() {
+        chooseContactButton = new JButton("Choose");
+        chooseContactButton.addActionListener(e -> new ContactsView(this::setReceiverEmail));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 2;
         constraints.gridy = 0;
         constraints.weightx = 3.0;
         constraints.fill = GridBagConstraints.BOTH;
-        receiverContainer.add(button, constraints);
+        receiverContainer.add(chooseContactButton, constraints);
     }
 
     private void createTopicInputField() {
@@ -176,9 +180,9 @@ public class NewMessageView extends JFrame {
     }
 
     private JButton createButton() {
-        JButton button = new JButton("Add");
-        buttonsContainer.add(button);
-        return button;
+        createButton = new JButton("Add");
+        buttonsContainer.add(createButton);
+        return createButton;
     }
 
     private JButton cancelButton() {
@@ -191,4 +195,18 @@ public class NewMessageView extends JFrame {
     private void setReceiverEmail(String email) {
         receiverInputField.setText(email);
     }
+
+    public void bindOnClickCreateButton(ActionListener listener) {
+        createButton.addActionListener(listener);
+    }
+
+    public void bindOnClickChooseContactButton(ActionListener listener) {
+        chooseContactButton.addActionListener(listener);
+    }
+
+    public void bindOnClickCancelButton(ActionListener listener) {
+        chooseContactButton.addActionListener(listener);
+    }
+
+
 }

@@ -13,9 +13,6 @@ public class EmailController {
     private static EmailController INSTANCE;
     private final App app;
     public final ArrayList<Message> sentMessages = new ArrayList<>(List.of(
-            new Message("marcin.test@gmail.com", "testowy", "Test, test lalali lalala"),
-            new Message("ancymon@gmail.com", "kotki", "Lubie kotki, pozdrawiam"),
-            new Message("pawel@gmail.com", "rre", "Lubie kotki 2137, pozdrawiam Lubie kotki 2137 ")
     ));
     private EmailView view;
 

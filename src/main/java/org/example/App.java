@@ -4,6 +4,8 @@ import org.example.presentation.emailscreen.EmailController;
 import org.example.presentation.emailscreen.EmailView;
 import org.example.presentation.newcontactscreen.NewContactController;
 import org.example.presentation.newcontactscreen.NewContactView;
+import org.example.presentation.newemailscreen.NewMessageController;
+import org.example.presentation.newemailscreen.NewMessageView;
 
 public class App {
     private static App INSTANCE;
@@ -29,7 +31,7 @@ public class App {
     }
 
     public void openNewMessageScreen() {
-//        EmailView emailView = new EmailView(INSTANCE);
-//        EmailController.getInstance(emailView);
+        NewMessageView messageView = new NewMessageView();
+        NewMessageController.getInstance().setView(messageView);
     }
 }
