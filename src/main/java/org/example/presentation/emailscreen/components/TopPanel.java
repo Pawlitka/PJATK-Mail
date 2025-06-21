@@ -1,7 +1,7 @@
 package org.example.presentation.emailscreen.components;
 
 import org.example.presentation.newcontactscreen.NewContactView;
-import org.example.presentation.newemailscreen.NewEmailView;
+import org.example.presentation.newemailscreen.NewMessageView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,7 +100,7 @@ public class TopPanel extends JPanel {
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setFont(new Font("Arial",Font.BOLD, 12));
         button.setText("Create Email");
-        button.addActionListener(e -> new NewEmailView());
+        button.addActionListener(e -> new NewMessageView());
         return button;
     }
 

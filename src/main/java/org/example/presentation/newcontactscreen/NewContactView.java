@@ -1,24 +1,19 @@
 package org.example.presentation.newcontactscreen;
 
-import org.example.presentation.emailscreen.EmailController;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.regex.Pattern;
+import java.awt.event.ActionListener;
 
 public class NewContactView extends JFrame {
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$");
     private final JPanel mainPanel;
     private final JPanel nameContainer;
     private final JPanel surnameContainer;
     private final JPanel emailContainer;
     private final JPanel buttonsContainer;
-    private final EmailController.ContactSaver contactSaver = new EmailController.ContactSaver("contacts.txt");
-    private  JTextField nameInputField;
-    private  JTextField surnameInputField;
-    private  JTextField emailInputField;
+    private JTextField nameInputField;
+    private JTextField surnameInputField;
+    private JTextField emailInputField;
+    private JButton createButton;
 
 
     public NewContactView() {
@@ -86,8 +81,8 @@ public class NewContactView extends JFrame {
     }
 
     private void setButtonsContainer() {
-        createButton();
-        cancelButton();
+        setCreateButton();
+        setCancelButton();
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -170,62 +165,53 @@ public class NewContactView extends JFrame {
         emailContainer.add(emailInputField, constraints);
     }
 
-    private void createButton() {
-        JButton button = new JButton("Add");
-
-        button.addActionListener(e -> {
-            String name = nameInputField.getText().trim();
-            String surname = surnameInputField.getText().trim();
-            String email = emailInputField.getText().trim();
-            if(name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
-                showError("All fields are required!");
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                emailInputField.setBorder(BorderFactory.createLineBorder(Color.RED));
-                showError("Invalid email address!");
-                return;
-            } else {
-                emailInputField.setBorder(BorderFactory.createLineBorder(Color.white));
-            }
-
-            try {
-                EmailController.Contact contact = new EmailController.Contact(name, surname, email);
-                contactSaver.save(contact);
-                JOptionPane.showMessageDialog(this, "Contact saved!");
-                clearFields();
-                dispose();
-
-            } catch (IOException ex) {
-                showError("Error reading or saving contacts: " + ex.getMessage());
-            }
-            dispose();
-        });
-
-        buttonsContainer.add(button);
+    private void setCreateButton() {
+        createButton = new JButton("Add");
+        buttonsContainer.add(createButton);
     }
 
-    private JButton cancelButton() {
+    private JButton setCancelButton() {
         JButton button = new JButton("Cancel");
         button.addActionListener(e -> dispose());
         buttonsContainer.add(button);
         return button;
     }
 
-    public static boolean isValidEmail(String email) {
-        return EMAIL_PATTERN.matcher(email).matches();
-    }
-
-    private void clearFields() {
+    public void clearFields() {
         nameInputField.setText("");
         surnameInputField.setText("");
         emailInputField.setText("");
     }
 
-    private void showError(String message) {
+    public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void bindOnClickCreateButton(ActionListener listener) {
+        createButton.addActionListener(listener);
+    }
 
+    public String getNameInputValue() {
+        return nameInputField.getText().trim();
+    }
+
+    public String getSurnameInputValue() {
+        return surnameInputField.getText().trim();
+    }
+
+    public String getEmailInputValue() {
+        return emailInputField.getText().trim();
+    }
+
+    public void setInvalidEmailInputStyle() {
+        emailInputField.setBorder(BorderFactory.createLineBorder(Color.RED));
+    }
+
+    public void setValidEmailInputStyle() {
+        emailInputField.setBorder(BorderFactory.createLineBorder(Color.white));
+    }
+
+    public void showContactSavedDialog() {
+        JOptionPane.showMessageDialog(this, "Contact saved!");
+    }
 }

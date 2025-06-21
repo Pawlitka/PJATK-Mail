@@ -5,7 +5,7 @@ import org.example.presentation.contactsscreen.ContactsView;
 import javax.swing.*;
 import java.awt.*;
 
-public class NewEmailView extends JFrame {
+public class NewMessageView extends JFrame {
     private final JPanel mainPanel;
     private final JPanel topPanel;
     private final JPanel bottomPanel;
@@ -18,7 +18,7 @@ public class NewEmailView extends JFrame {
     private final JPanel buttonsContainer;
 
 
-    public NewEmailView() {
+    public NewMessageView() {
         mainPanel = new JPanel(new GridBagLayout());
         topPanel = new JPanel(new GridBagLayout());
         bottomPanel = new JPanel(new GridBagLayout());
