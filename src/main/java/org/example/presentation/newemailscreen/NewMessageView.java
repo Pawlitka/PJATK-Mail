@@ -1,7 +1,5 @@
 package org.example.presentation.newemailscreen;
 
-import org.example.presentation.contactsscreen.ContactsView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -76,7 +74,7 @@ public class NewMessageView extends JFrame {
     }
     private void setButtonsContainer() {
         createButton();
-        cancelButton();
+        createCancelButton();
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -123,7 +121,6 @@ public class NewMessageView extends JFrame {
 
     private void createChooseContactButton() {
         chooseContactButton = new JButton("Choose");
-        chooseContactButton.addActionListener(e -> new ContactsView(this::setReceiverEmail));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 2;
         constraints.gridy = 0;
@@ -185,14 +182,13 @@ public class NewMessageView extends JFrame {
         return createButton;
     }
 
-    private JButton cancelButton() {
-        JButton button = new JButton("Cancel");
-        button.addActionListener(e -> dispose());
-        buttonsContainer.add(button);
-        return button;
+    private JButton createCancelButton() {
+        cancelButton = new JButton("Cancel");
+        buttonsContainer.add(cancelButton);
+        return cancelButton;
     }
 
-    private void setReceiverEmail(String email) {
+    public void setReceiverEmail(String email) {
         receiverInputField.setText(email);
     }
 
@@ -205,7 +201,7 @@ public class NewMessageView extends JFrame {
     }
 
     public void bindOnClickCancelButton(ActionListener listener) {
-        chooseContactButton.addActionListener(listener);
+        cancelButton.addActionListener(listener);
     }
 
 
