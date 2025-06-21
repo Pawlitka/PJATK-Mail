@@ -14,6 +14,10 @@ public class Contact {
 
     @Override
     public String toString() {
+        return email;
+    }
+
+    public String toCsv() {
         return String.format("%s,%s,%s", name, surname, email);
     }
 
