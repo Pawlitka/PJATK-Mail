@@ -16,6 +16,7 @@ public class NewContactView extends JFrame {
     private JTextField surnameInputField;
     private JTextField emailInputField;
     private JButton createButton;
+    private JButton cancelButton;
 
 
     public NewContactView() {
@@ -173,10 +174,9 @@ public class NewContactView extends JFrame {
     }
 
     private JButton setCancelButton() {
-        JButton button = new JButton("Cancel");
-        button.addActionListener(e -> dispose());
-        buttonsContainer.add(button);
-        return button;
+        cancelButton = new JButton("Cancel");
+        buttonsContainer.add(cancelButton);
+        return cancelButton;
     }
 
     public void clearFields() {
@@ -191,6 +191,10 @@ public class NewContactView extends JFrame {
 
     public void bindOnClickCreateButton(ActionListener listener) {
         createButton.addActionListener(listener);
+    }
+
+    public void bindOnClickCancelButton(ActionListener listener) {
+        cancelButton.addActionListener(listener);
     }
 
     public String getNameInputValue() {
@@ -215,5 +219,9 @@ public class NewContactView extends JFrame {
 
     public void showContactSavedDialog() {
         JOptionPane.showMessageDialog(this, "Contact saved!");
+    }
+
+    public void close() {
+        dispose();
     }
 }

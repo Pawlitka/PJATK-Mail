@@ -7,6 +7,7 @@ import org.example.model.EmailValidator;
 import org.example.model.IRepository;
 import org.example.model.RepositoryException;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,22 +17,26 @@ public class NewContactController {
     private final IRepository repository;
     private NewContactView view;
 
-    private NewContactController(NewContactView view, App app) {
-        this.view = view;
+    private NewContactController(App app) {
         this.app = app;
         this.repository = new FileRepository();
-        bindListeners();
     }
 
-    public static NewContactController getInstance(NewContactView view, App app) {
+    public static NewContactController getInstance(App app) {
         if (INSTANCE == null) {
-            INSTANCE = new NewContactController(view, app);
+            INSTANCE = new NewContactController(app);
         }
         return INSTANCE;
     }
 
+    public void setView(NewContactView view) {
+        this.view = view;
+        bindListeners();
+    }
+
     private void bindListeners() {
         view.bindOnClickCreateButton(new OnClickCreateButtonListener());
+        view.bindOnClickCancelButton(new OnClickCancelButtonListener());
     }
 
     private class OnClickCreateButtonListener implements ActionListener {
@@ -62,6 +67,14 @@ public class NewContactController {
             } catch (RepositoryException ex) {
                 view.showError("Error reading or saving contacts: " + ex.getMessage());
             }
+        }
+    }
+
+    private class OnClickCancelButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.close();
         }
     }
 }

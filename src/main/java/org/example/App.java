@@ -8,7 +8,8 @@ import org.example.presentation.newcontactscreen.NewContactView;
 public class App {
     private static App INSTANCE;
 
-    private App() { }
+    private App() {
+    }
 
     public static App getInstance() {
         if (INSTANCE == null) {
@@ -24,7 +25,7 @@ public class App {
 
     public void openNewContactScreen() {
         NewContactView contactView = new NewContactView();
-        NewContactController.getInstance(contactView, INSTANCE);
+        NewContactController.getInstance(INSTANCE).setView(contactView);
     }
 
     public void openNewMessageScreen() {
