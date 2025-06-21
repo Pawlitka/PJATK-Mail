@@ -6,6 +6,7 @@ public class Message {
     private final String content;
 
     public Message(String receiverEmail, String title, String content) {
+        checkIfEmailIsValid(receiverEmail);
         this.receiverEmail = receiverEmail;
         this.title = title;
         this.content = content;
@@ -27,5 +28,11 @@ public class Message {
     @Override
     public String toString() {
         return title;
+    }
+
+    private void checkIfEmailIsValid(String email) {
+        if(!EmailValidator.validate(email)) {
+            throw new IllegalArgumentException("Invalid email.");
+        }
     }
 }

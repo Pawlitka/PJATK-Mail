@@ -3,16 +3,14 @@ package org.example.presentation.newcontactscreen;
 import org.example.App;
 import org.example.data.FileRepository;
 import org.example.model.Contact;
+import org.example.model.EmailValidator;
 import org.example.model.IRepository;
 import org.example.model.RepositoryException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.regex.Pattern;
 
 public class NewContactController {
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$");
     private static NewContactController INSTANCE;
     private final App app;
     private final IRepository repository;
@@ -32,10 +30,6 @@ public class NewContactController {
         return INSTANCE;
     }
 
-    public static boolean isValidEmail(String email) {
-        return EMAIL_PATTERN.matcher(email).matches();
-    }
-
     private void bindListeners() {
         view.bindOnClickCreateButton(new OnClickCreateButtonListener());
     }
@@ -52,7 +46,7 @@ public class NewContactController {
                 return;
             }
 
-            if (!isValidEmail(email)) {
+            if (!EmailValidator.validate(email)) {
                 view.setInvalidEmailInputStyle();
                 view.showError("Invalid email address!");
                 return;
