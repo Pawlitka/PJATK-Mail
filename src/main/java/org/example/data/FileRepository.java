@@ -44,8 +44,8 @@ public class FileRepository implements IRepository {
 
     public void save(Contact contact) throws RepositoryException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){
-            writer.write(contact.toString());
             writer.newLine();
+            writer.write(contact.toString());
         } catch (IOException e) {
             throw new RepositoryException(e.getMessage());
         }

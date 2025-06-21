@@ -1,5 +1,7 @@
 package org.example.presentation.newcontactscreen;
 
+import org.example.App;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

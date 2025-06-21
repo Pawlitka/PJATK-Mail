@@ -1,5 +1,6 @@
 package org.example.presentation.newcontactscreen;
 
+import org.example.App;
 import org.example.data.FileRepository;
 import org.example.model.Contact;
 import org.example.model.IRepository;
@@ -13,26 +14,31 @@ public class NewContactController {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$");
     private static NewContactController INSTANCE;
+    private final App app;
     private final IRepository repository;
     private NewContactView view;
 
-    private NewContactController(NewContactView view) {
+    private NewContactController(NewContactView view, App app) {
         this.view = view;
+        this.app = app;
         this.repository = new FileRepository();
         bindListeners();
     }
 
-    public static NewContactController getInstance(NewContactView view) {
+    public static NewContactController getInstance(NewContactView view, App app) {
         if (INSTANCE == null) {
-            INSTANCE = new NewContactController(view);
+            INSTANCE = new NewContactController(view, app);
         }
         return INSTANCE;
+    }
+
+    public static boolean isValidEmail(String email) {
+        return EMAIL_PATTERN.matcher(email).matches();
     }
 
     private void bindListeners() {
         view.bindOnClickCreateButton(new OnClickCreateButtonListener());
     }
-
 
     private class OnClickCreateButtonListener implements ActionListener {
 
@@ -63,9 +69,5 @@ public class NewContactController {
                 view.showError("Error reading or saving contacts: " + ex.getMessage());
             }
         }
-    }
-
-    public static boolean isValidEmail(String email) {
-        return EMAIL_PATTERN.matcher(email).matches();
     }
 }

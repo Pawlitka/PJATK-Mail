@@ -1,5 +1,6 @@
 package org.example.presentation.emailscreen;
 
+import org.example.App;
 import org.example.presentation.emailscreen.components.BottomPanel;
 import org.example.presentation.emailscreen.components.TopPanel;
 
@@ -10,6 +11,7 @@ public class EmailView extends JFrame {
     private final JPanel mainPanel;
     private final TopPanel topPanel;
     private final BottomPanel bottomPanel;
+
 
     public EmailView() {
         mainPanel = new JPanel(new GridBagLayout());

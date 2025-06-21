@@ -5,6 +5,7 @@ import org.example.presentation.newemailscreen.NewMessageView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -100,7 +101,7 @@ public class TopPanel extends JPanel {
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setFont(new Font("Arial",Font.BOLD, 12));
         button.setText("Create Email");
-        button.addActionListener(e -> new NewMessageView());
+//        button.addActionListener(e -> new NewMessageView());
         return button;
     }
 
@@ -112,7 +113,7 @@ public class TopPanel extends JPanel {
         button.setFont(new Font("Arial",Font.BOLD, 12));
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.addActionListener(e -> new NewContactView());
+//        button.addActionListener(e -> new NewContactView());
         return button;
     }
 
@@ -126,5 +127,13 @@ public class TopPanel extends JPanel {
 
     private void updateTime() {
         clockLabel.setText(timeFormat.format(new Date()));
+    }
+
+    public void bindOnClickContactButton(ActionListener listener) {
+        contactButton.addActionListener(listener);
+    }
+
+    public void bindOnClickEmailButton(ActionListener listener) {
+        emailButton.addActionListener(listener);
     }
 }
