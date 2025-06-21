@@ -1,7 +1,5 @@
 package org.example.presentation.contactsscreen;
 
-import org.example.model.Message;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -10,13 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-public class ContactsFrame extends JFrame {
+public class ContactsView extends JFrame {
     private final JPanel mainPanel;
     private final JPanel buttonsContainer;
     private final JList<String> emailList;
     private final Consumer<String> onEmailSelected;
 
-    public ContactsFrame(Consumer<String> onEmailSelected) {
+    public ContactsView(Consumer<String> onEmailSelected) {
         mainPanel = new JPanel(new GridBagLayout());
         buttonsContainer = new JPanel();
         emailList = new JList<>();

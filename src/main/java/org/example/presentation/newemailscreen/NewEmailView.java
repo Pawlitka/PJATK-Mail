@@ -1,12 +1,11 @@
 package org.example.presentation.newemailscreen;
 
-import org.example.presentation.contactsscreen.ContactsFrame;
-import org.example.presentation.newcontactscreen.NewContactFrame;
+import org.example.presentation.contactsscreen.ContactsView;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class NewEmailFrame extends JFrame {
+public class NewEmailView extends JFrame {
     private final JPanel mainPanel;
     private final JPanel topPanel;
     private final JPanel bottomPanel;
@@ -19,7 +18,7 @@ public class NewEmailFrame extends JFrame {
     private final JPanel buttonsContainer;
 
 
-    public NewEmailFrame() {
+    public NewEmailView() {
         mainPanel = new JPanel(new GridBagLayout());
         topPanel = new JPanel(new GridBagLayout());
         bottomPanel = new JPanel(new GridBagLayout());
@@ -120,7 +119,7 @@ public class NewEmailFrame extends JFrame {
 
     private void createContactButton() {
         JButton button = new JButton("Choose");
-        button.addActionListener(e -> new ContactsFrame(this::setReceiverEmail));
+        button.addActionListener(e -> new ContactsView(this::setReceiverEmail));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 2;
         constraints.gridy = 0;

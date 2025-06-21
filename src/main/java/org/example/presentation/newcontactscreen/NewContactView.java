@@ -2,13 +2,12 @@ package org.example.presentation.newcontactscreen;
 
 import org.example.presentation.emailscreen.EmailController;
 
-import javax.imageio.IIOException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class NewContactFrame extends JFrame {
+public class NewContactView extends JFrame {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$");
     private final JPanel mainPanel;
@@ -22,7 +21,7 @@ public class NewContactFrame extends JFrame {
     private  JTextField emailInputField;
 
 
-    public NewContactFrame() {
+    public NewContactView() {
         mainPanel = new JPanel(new GridBagLayout());
         nameContainer = new JPanel(new GridBagLayout());
         surnameContainer = new JPanel(new GridBagLayout());
