@@ -1,6 +1,7 @@
 package org.example.presentation.contactsscreen;
 
 import org.example.model.Contact;
+import org.example.model.IObserver;
 import org.example.model.IRepository;
 import org.example.model.RepositoryException;
 
@@ -21,7 +22,7 @@ public class ContactsListController {
     private ContactsListController(IRepository repository, Consumer<Contact> onEmailSelected) throws RepositoryException {
         this.repository = repository;
         this.onEmailSelected = onEmailSelected;
-        contacts = repository.load();
+        contacts = repository.loadContacts();
     }
 
     public static ContactsListController getInstance() {

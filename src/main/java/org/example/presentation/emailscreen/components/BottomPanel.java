@@ -4,20 +4,20 @@ import org.example.model.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.List;
 
 public class BottomPanel extends JPanel {
     private final JSplitPane mainContainer;
     private final JPanel leftPanel;
     private final JPanel rightPanel;
     private final JList<Message> listOfSentEmails = new JList<>();
-    private JTextArea textArea;
     private final JPanel recevierAndTopicPanel;
-    private  JTextField receiverInputField;
-    private  JTextField topicInputField;
     private final JPanel topicContainer;
     private final JPanel receiverContainer;
+    private JTextArea textArea;
+    private JTextField receiverInputField;
+    private JTextField topicInputField;
 
     public BottomPanel() {
         super(new BorderLayout());
@@ -78,7 +78,7 @@ public class BottomPanel extends JPanel {
         constraints.gridheight = 2;
         constraints.weighty = 2;
         constraints.fill = GridBagConstraints.BOTH;
-        rightPanel.add(recevierAndTopicPanel,constraints);
+        rightPanel.add(recevierAndTopicPanel, constraints);
         createReceiverInputField();
         createTopicInputField();
     }
@@ -121,13 +121,11 @@ public class BottomPanel extends JPanel {
         topicInputField.setText(value);
     }
 
-
-    public void setListOfSentEmails(ArrayList<Message> messages) {
-        listOfSentEmails.clearSelection();
+    public void setListOfSentEmails(List<Message> messages) {
         DefaultListModel<Message> listModel = new DefaultListModel<>();
         listModel.addAll(messages);
+
         listOfSentEmails.setModel(listModel);
-        listOfSentEmails.updateUI();
     }
 
     private void createReceiverInputField() {

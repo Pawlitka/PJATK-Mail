@@ -224,4 +224,6 @@ public class NewContactView extends JFrame {
     public void close() {
         dispose();
     }
+
+
 }

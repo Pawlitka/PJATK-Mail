@@ -1,7 +1,9 @@
 package org.example.presentation.emailscreen;
 
 import org.example.App;
+import org.example.model.IRepository;
 import org.example.model.Message;
+import org.example.model.RepositoryException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,20 +14,23 @@ import java.util.function.Consumer;
 public class EmailController {
     private static EmailController INSTANCE;
     private final App app;
-    public final ArrayList<Message> sentMessages = new ArrayList<>(List.of(
-    ));
+    public final List<Message> messages;
     private EmailView view;
+    private final IRepository repository;
 
-    private EmailController(EmailView view, App app) {
+
+    private EmailController(IRepository repository,EmailView view, App app) throws RepositoryException {
+        this.repository = repository;
         this.view = view;
         this.app = app;
+        messages = repository.loadMessages();
         initData();
         bindListeners();
     }
 
-    public static EmailController getInstance(EmailView view, App app) {
+    public static EmailController getInstance(IRepository repository, EmailView view, App app) throws RepositoryException {
         if (INSTANCE == null) {
-            INSTANCE = new EmailController(view, app);
+            INSTANCE = new EmailController(repository, view, app);
         }
         return INSTANCE;
     }
@@ -36,9 +41,9 @@ public class EmailController {
         view.getTopPanel().bindOnClickEmailButton(new OnClickEmailButtonListener());
     }
 
-    private void initData() {
+    private void initData() throws RepositoryException {
 
-        view.getBottomPanel().setListOfSentEmails(sentMessages);
+        view.getBottomPanel().setListOfSentEmails(messages);
     }
 
     private class OnClickSentMessageListener implements Consumer<Message> {
@@ -46,7 +51,7 @@ public class EmailController {
         public void accept(Message message) {
             view.getBottomPanel().setMessageContent(message.getContent());
             view.getBottomPanel().setReceiverInputFieldValue(message.getReceiverEmail());
-            view.getBottomPanel().setTopicInputFieldValue(message.getTitle());
+            view.getBottomPanel().setTopicInputFieldValue(message.getTopic());
         }
     }
 

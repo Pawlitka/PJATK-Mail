@@ -1,21 +1,33 @@
 package org.example.presentation.newemailscreen;
 
 import org.example.App;
+import org.example.data.FileRepository;
 import org.example.model.Contact;
+import org.example.model.IRepository;
+import org.example.model.Message;
 import org.example.model.RepositoryException;
+import org.simplejavamail.api.email.Email;
+import org.simplejavamail.api.mailer.Mailer;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
 
-import java.awt.*;
+import javax.swing.text.html.HTML;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NewMessageController {
     private static NewMessageController INSTANCE;
     private NewMessageView view;
-    private Contact contact;
     private App app;
+    private final String USERNAME = "";
+    private final String PASSWORD = "";
+    private final String SMTP_HOST = "smtp.gmail.com";
+    private final Integer PORT = 587;
+    private final IRepository repository;
 
     private NewMessageController(App app) {
         this.app = app;
+        this.repository = new FileRepository();
     }
 
     public static NewMessageController getInstance() {
@@ -35,7 +47,6 @@ public class NewMessageController {
     }
 
     public void setContact(Contact contact) {
-        this.contact = contact;
         view.setReceiverEmail(contact.getEmail());
     }
 
@@ -51,11 +62,27 @@ public class NewMessageController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                app.openContactsListScreen();
+                Message message = new Message(view.getMessageReceiver(), view.getTopic(), view.getTextArea());
+                repository.saveMessages(message);
             } catch (RepositoryException ex) {
-                throw new RuntimeException(ex);
+                view.showError("Error" + ex.getMessage());
             }
+
+            Email email = EmailBuilder.startingBlank()
+                    .from("pawel.kapusta2004@gmail.com")
+                    .to(view.getMessageReceiver())
+                    .withSubject(view.getTopic())
+                    .withHTMLText(view.getTextArea())
+                    .buildEmail();
+
+            MailerBuilder
+                    .withSMTPServer(SMTP_HOST, PORT, USERNAME, PASSWORD)
+                    .async()
+                    .buildMailer().sendMail(email);
+
+            view.dispose();
         }
+
     }
 
     private class OnClickChooseContactButtonListener implements ActionListener {

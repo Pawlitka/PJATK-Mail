@@ -177,7 +177,7 @@ public class NewMessageView extends JFrame {
     }
 
     private JButton createButton() {
-        createButton = new JButton("Add");
+        createButton = new JButton("Send");
         buttonsContainer.add(createButton);
         return createButton;
     }
@@ -204,5 +204,20 @@ public class NewMessageView extends JFrame {
         cancelButton.addActionListener(listener);
     }
 
+    public  String getTextArea() {
+        return textArea.getText();
+    }
+
+    public  String getTopic() {
+        return topicInputField.getText();
+    }
+
+    public  String getMessageReceiver() {
+     return  receiverInputField.getText();
+    }
+
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
 }

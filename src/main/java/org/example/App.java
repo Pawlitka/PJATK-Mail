@@ -30,9 +30,9 @@ public class App {
         return INSTANCE;
     }
 
-    public void openEmailScreen() {
+    public void openEmailScreen() throws RepositoryException {
         EmailView emailView = new EmailView();
-        EmailController.getInstance(emailView, INSTANCE);
+        EmailController.getInstance(repository, emailView, INSTANCE);
     }
 
     public void openNewContactScreen() {
