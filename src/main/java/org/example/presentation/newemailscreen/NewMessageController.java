@@ -2,31 +2,28 @@ package org.example.presentation.newemailscreen;
 
 import org.example.App;
 import org.example.data.FileRepository;
-import org.example.model.Contact;
-import org.example.model.IRepository;
-import org.example.model.Message;
-import org.example.model.RepositoryException;
+import org.example.model.*;
 import org.simplejavamail.api.email.Email;
-import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
 
-import javax.swing.text.html.HTML;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NewMessageController {
     private static NewMessageController INSTANCE;
-    private NewMessageView view;
-    private App app;
     private final String USERNAME = "";
     private final String PASSWORD = "";
     private final String SMTP_HOST = "smtp.gmail.com";
     private final Integer PORT = 587;
     private final IRepository repository;
+    private final NotificationService notificationService;
+    private NewMessageView view;
+    private App app;
 
-    private NewMessageController(App app) {
+    private NewMessageController(App app, NotificationService notificationService) {
         this.app = app;
+        this.notificationService = notificationService;
         this.repository = new FileRepository();
     }
 
@@ -34,9 +31,9 @@ public class NewMessageController {
         return INSTANCE;
     }
 
-    public static NewMessageController getInstance(App app) {
+    public static NewMessageController getInstance(App app, NotificationService notificationService) {
         if (INSTANCE == null) {
-            INSTANCE = new NewMessageController(app);
+            INSTANCE = new NewMessageController(app, notificationService);
         }
         return INSTANCE;
     }
@@ -64,6 +61,7 @@ public class NewMessageController {
             try {
                 Message message = new Message(view.getMessageReceiver(), view.getTopic(), view.getTextArea());
                 repository.saveMessages(message);
+                notificationService.notify(EventType.NEW_MESSAGE);
             } catch (RepositoryException ex) {
                 view.showError("Error" + ex.getMessage());
             }

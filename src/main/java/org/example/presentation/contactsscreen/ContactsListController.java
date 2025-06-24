@@ -1,9 +1,6 @@
 package org.example.presentation.contactsscreen;
 
-import org.example.model.Contact;
-import org.example.model.IObserver;
-import org.example.model.IRepository;
-import org.example.model.RepositoryException;
+import org.example.model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,43 +9,56 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ContactsListController {
+public class ContactsListController implements EventListener {
     private static ContactsListController INSTANCE;
-    private final List<Contact> contacts;
+    private  List<Contact> contacts;
     private final IRepository repository;
+    private final NotificationService notificationService;
     private ContactsListView view;
     private Consumer<Contact> onEmailSelected;
 
-    private ContactsListController(IRepository repository, Consumer<Contact> onEmailSelected) throws RepositoryException {
+    private ContactsListController(IRepository repository, NotificationService notificationService, Consumer<Contact> onEmailSelected) throws RepositoryException {
         this.repository = repository;
+        this.notificationService = notificationService;
         this.onEmailSelected = onEmailSelected;
-        contacts = repository.loadContacts();
     }
 
     public static ContactsListController getInstance() {
         return INSTANCE;
     }
 
-    public List<Contact> getContacts() {
-     return contacts;
-    }
-
-    public static ContactsListController getInstance(IRepository repository, Consumer<Contact> onEmailSelected) throws RepositoryException {
+    public static ContactsListController getInstance(IRepository repository, NotificationService notificationService, Consumer<Contact> onEmailSelected) throws RepositoryException {
         if (INSTANCE == null) {
-            INSTANCE = new ContactsListController(repository, onEmailSelected);
+            INSTANCE = new ContactsListController(repository, notificationService, onEmailSelected);
         }
         return INSTANCE;
     }
 
-    public void setView(ContactsListView view) {
+    public void setView(ContactsListView view) throws RepositoryException {
         this.view = view;
         bindListeners();
-        view.setContactsList();
+        initData();
     }
 
     private void bindListeners() {
         view.bindOnClickSetButton(new OnClickSetButtonListener());
         view.bindOnClickCancelButton(new OnClickCancelButtonListener());
+    }
+
+    public void initData() throws RepositoryException {
+        contacts = repository.loadContacts();
+        view.setContactsList(contacts);
+    }
+
+    @Override
+    public void update(EventType eventType) {
+        if(eventType.equals(EventType.NEW_CONTACT)) {
+            try {
+                initData();
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private class OnClickSetButtonListener implements ActionListener {
@@ -60,6 +70,8 @@ public class ContactsListController {
                 onEmailSelected.accept(selectedContact);
                 view.showDialog("Chosen email: " + selectedContact);
                 view.dispose();
+                notificationService.unsubscribe(EventType.NEW_CONTACT, ContactsListController.getInstance());
+
             } else {
                 view.showDialog("You haven't chose email.");
             }

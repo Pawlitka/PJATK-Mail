@@ -2,10 +2,7 @@ package org.example.presentation.newcontactscreen;
 
 import org.example.App;
 import org.example.data.FileRepository;
-import org.example.model.Contact;
-import org.example.model.EmailValidator;
-import org.example.model.IRepository;
-import org.example.model.RepositoryException;
+import org.example.model.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +11,18 @@ public class NewContactController {
     private static NewContactController INSTANCE;
     private final App app;
     private final IRepository repository;
+    private final NotificationService notificationService;
     private NewContactView view;
 
-    private NewContactController(App app) {
+    private NewContactController(App app, NotificationService notificationService) {
         this.app = app;
+        this.notificationService = notificationService;
         this.repository = new FileRepository();
     }
 
-    public static NewContactController getInstance(App app) {
+    public static NewContactController getInstance(App app, NotificationService notificationService) {
         if (INSTANCE == null) {
-            INSTANCE = new NewContactController(app);
+            INSTANCE = new NewContactController(app, notificationService);
         }
         return INSTANCE;
     }
@@ -62,6 +61,7 @@ public class NewContactController {
                 Contact contact = new Contact(name, surname, email);
                 repository.saveContacts(contact);
                 view.showContactSavedDialog();
+                notificationService.notify(EventType.NEW_CONTACT);
                 view.clearFields();
                 view.dispose();
 

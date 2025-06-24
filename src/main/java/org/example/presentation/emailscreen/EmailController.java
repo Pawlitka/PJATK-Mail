@@ -1,9 +1,7 @@
 package org.example.presentation.emailscreen;
 
 import org.example.App;
-import org.example.model.IRepository;
-import org.example.model.Message;
-import org.example.model.RepositoryException;
+import org.example.model.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,26 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EmailController {
+public class EmailController implements EventListener {
     private static EmailController INSTANCE;
     private final App app;
-    public final List<Message> messages;
+    public List<Message> messages;
     private EmailView view;
     private final IRepository repository;
+    private final NotificationService notificationService;
 
 
-    private EmailController(IRepository repository,EmailView view, App app) throws RepositoryException {
+    private EmailController(IRepository repository, NotificationService notificationService, EmailView view, App app) throws RepositoryException {
         this.repository = repository;
+        this.notificationService = notificationService;
         this.view = view;
         this.app = app;
-        messages = repository.loadMessages();
         initData();
         bindListeners();
     }
 
-    public static EmailController getInstance(IRepository repository, EmailView view, App app) throws RepositoryException {
+    public static EmailController getInstance() {
+        return INSTANCE;
+    }
+
+    public static EmailController getInstance(IRepository repository, NotificationService notificationService, EmailView view, App app) throws RepositoryException {
         if (INSTANCE == null) {
-            INSTANCE = new EmailController(repository, view, app);
+            INSTANCE = new EmailController(repository, notificationService, view, app);
         }
         return INSTANCE;
     }
@@ -42,8 +45,19 @@ public class EmailController {
     }
 
     private void initData() throws RepositoryException {
-
+        messages = repository.loadMessages();
         view.getBottomPanel().setListOfSentEmails(messages);
+    }
+
+    @Override
+    public void update(EventType eventType) {
+        if(eventType.equals(EventType.NEW_MESSAGE)) {
+            try {
+                initData();
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private class OnClickSentMessageListener implements Consumer<Message> {

@@ -4,6 +4,7 @@ import org.example.model.Contact;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
@@ -94,10 +95,9 @@ public class ContactsListView extends JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    public void setContactsList() {
+    public void setContactsList(List<Contact> contacts) {
         DefaultListModel<Contact> listModel = new DefaultListModel<>();
-        listModel.addAll(ContactsListController.getInstance().getContacts());
-
+        listModel.addAll(contacts);
         emailList.setModel(listModel);
     }
 }
