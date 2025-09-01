@@ -3,6 +3,9 @@
 PJATK Mail is a simple email client desktop application built in Java with the Swing library.
 The project follows the MVC (Model–View–Controller) design pattern to ensure clear separation of logic, UI, and data handling.
 
+PJATK Mail uses the [Simple Java Mail](https://www.simplejavamail.org/)
+library to handle email sending.
+
 ##  Features
 
 - **Contact Management** - add and store contacts (first name, last name, email address).
