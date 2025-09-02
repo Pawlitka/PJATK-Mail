@@ -6,27 +6,27 @@ It was created as a university project and demonstrates working with GUIs, local
 
 - Real-time clock displayed on the home window (updates every second).
 
-### 1) Contact management:
+- #### Contact management:
 
-- Add new contacts with Name, Surname, and Email.
+    - Add new contacts with Name, Surname, and Email.
 
-- Built-in email validation (must contain @ and .).
+    - Built-in email validation (must contain @ and .).
 
-- Contacts are stored in a local .csv file.
+    - Contacts are stored in a local .csv file.
 
-### 2) Send emails:
+- #### Send emails:
 
-- Choose a recipient from your contact list.
+    - Choose a recipient from your contact list.
 
-- Enter subject and message content.
+    - Enter subject and message content.
 
-- Emails are sent via the Simple Java Mail library.
+    - Emails are sent via the Simple Java Mail library.
 
-- Sent emails are stored in a .csv file.
+    - Sent emails are stored in a .csv file.
 
-### 3) History view:
+- #### History view:
 
-- On the home page, you can see a list of sent emails, including recipients, subjects, and message contents.
+    - On the home page, you can see a list of sent emails, including recipients, subjects, and message contents.
 
 ## Screenshots
 
@@ -43,5 +43,10 @@ It was created as a university project and demonstrates working with GUIs, local
 ![Create Email](src/main/java/org/example/assets/create-email.png)
 ![Create Email](src/main/java/org/example/assets/create_email.gif)
 
-### Sent Email 
+### Sent Email
 ![Sent Email](src/main/java/org/example/assets/sent-email.png)
+
+## Future Improvements
+
+- Migrate from CSV to a database for more robust data management
+- Show replies to messages inside the app
