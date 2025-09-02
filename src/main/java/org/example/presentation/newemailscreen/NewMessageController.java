@@ -4,22 +4,25 @@ import org.example.App;
 import org.example.data.FileRepository;
 import org.example.model.*;
 import org.simplejavamail.api.email.Email;
+import org.simplejavamail.api.mailer.config.TransportStrategy;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NewMessageController {
     private static NewMessageController INSTANCE;
-    private final String USERNAME = "";
-    private final String PASSWORD = "";
+    private final String USERNAME = "[email]";
+    private final String PASSWORD = "[password]";
     private final String SMTP_HOST = "smtp.gmail.com";
     private final Integer PORT = 587;
     private final IRepository repository;
     private final NotificationService notificationService;
     private NewMessageView view;
     private App app;
+
 
     private NewMessageController(App app, NotificationService notificationService) {
         this.app = app;
@@ -67,14 +70,15 @@ public class NewMessageController {
             }
 
             Email email = EmailBuilder.startingBlank()
-                    .from("pawel.kapusta2004@gmail.com")
+                    .from(USERNAME)
                     .to(view.getMessageReceiver())
                     .withSubject(view.getTopic())
-                    .withHTMLText(view.getTextArea())
+                    .withPlainText(view.getTextArea())
                     .buildEmail();
 
             MailerBuilder
                     .withSMTPServer(SMTP_HOST, PORT, USERNAME, PASSWORD)
+                    .withTransportStrategy(TransportStrategy.SMTP_TLS)
                     .async()
                     .buildMailer().sendMail(email);
 
