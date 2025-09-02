@@ -1,19 +1,47 @@
 # PJATK Mail
+PJATK Mail is a simple email client application built in Java (Maven) using Swing.
+It was created as a university project and demonstrates working with GUIs, local file storage, and sending emails via an external library.
 
-PJATK Mail is a simple email client desktop application built in Java with the Swing library.
-The project follows the MVC (Model–View–Controller) design pattern to ensure clear separation of logic, UI, and data handling.
+## Features:
 
-PJATK Mail uses the [Simple Java Mail](https://www.simplejavamail.org/)
-library to handle email sending.
+- Real-time clock displayed on the home window (updates every second).
 
-##  Features
+### 1) Contact management:
 
-- **Contact Management** - add and store contacts (first name, last name, email address).
+- Add new contacts with Name, Surname, and Email.
 
-- **Email Creation** - compose new emails and select recipients from your contact list.
+- Built-in email validation (must contain @ and .).
 
-- **Sending & Saving Emails** - send emails and keep a record of all sent messages.
+- Contacts are stored in a local .csv file.
 
-- **Message History** - iew a list of previously sent messages.
+### 2) Send emails:
 
-- **Persistence** - save and restore application state (contacts & emails).
+- Choose a recipient from your contact list.
+
+- Enter subject and message content.
+
+- Emails are sent via the Simple Java Mail library.
+
+- Sent emails are stored in a .csv file.
+
+### 3) History view:
+
+- On the home page, you can see a list of sent emails, including recipients, subjects, and message contents.
+
+## Screenshots
+
+### Home page
+![Home Window](src/main/java/org/example/assets/home-view.png)
+
+### Create Contact
+![Create Contact](src/main/java/org/example/assets/create-contact.png)
+![Create Contact](src/main/java/org/example/assets/craete_contact_correct.gif)
+#### Invalid Contact Email
+![Invalid contact email](src/main/java/org/example/assets/create_contact_invalid_email.gif)
+
+### Send Email
+![Create Email](src/main/java/org/example/assets/create-email.png)
+![Create Email](src/main/java/org/example/assets/create_email.gif)
+
+### Sent Email 
+![Sent Email](src/main/java/org/example/assets/sent-email.png)
