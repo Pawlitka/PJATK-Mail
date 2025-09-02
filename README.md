@@ -8,25 +8,25 @@ It was created as a university project and demonstrates working with GUIs, local
 
 - #### Contact management:
 
-    - Add new contacts with Name, Surname, and Email.
+  - Add new contacts with Name, Surname, and Email.
 
-    - Built-in email validation (must contain @ and .).
+  - Built-in email validation (must contain @ and .).
 
-    - Contacts are stored in a local .csv file.
+  - Contacts are stored in a local .csv file.
 
 - #### Send emails:
 
-    - Choose a recipient from your contact list.
+  - Choose a recipient from your contact list.
 
-    - Enter subject and message content.
+  - Enter subject and message content.
 
-    - Emails are sent via the Simple Java Mail library.
+  - Emails are sent via the Simple Java Mail library.
 
-    - Sent emails are stored in a .csv file.
+  - Sent emails are stored in a .csv file.
 
 - #### History view:
 
-    - On the home page, you can see a list of sent emails, including recipients, subjects, and message contents.
+  - On the home page, you can see a list of sent emails, including recipients, subjects, and message contents.
 
 ## Screenshots
 
